@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="navbar">
+    <nav class="h-16 p-8 flex justify-end items-center p-2">
+        <div class="p-1 rounded-full hover:bg-blue-900">
+            <div
+                    id="user-photo"
+                    class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center cursor-pointer shadow-sm hover:shadow-md hover:shadow-gray-300"
+            >
+                <img
+                        class="w-full h-full object-cover"
+                        src="https://flowbite.com/docs/images/logo.svg"
+                        alt="foto user"
+                />
+            </div>
+            <div
+                    id="dropdown-menu"
+                    class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg menu-hidden z-10"
+            >
+                <ul class="py-2">
+                    <!--<li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Perfil</li>
+                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        Configuración
+                    </li>-->
+                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <a th:href="@{/logout}">
+                        Cerrar sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

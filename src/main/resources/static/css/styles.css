@@ -1,0 +1,36 @@
+html,
+body {
+  height: 100%;
+  background-color: #111827;
+  font-family: "Roboto", sans-serif;
+}
+
+.selector {
+  transform: scale(1);
+  transition: transform 0.2s;
+}
+
+.selector:hover {
+  transform: scale(1.1);
+}
+
+.menu-hidden {
+  display: none;
+}
+
+.bd-mode-toggle {
+  z-index: 1500;
+}
+
+.bd-mode-toggle .dropdown-menu .active .bi {
+  display: block !important;
+}
+
+.custom-table {
+  width: 100%; /* Para que la tabla ocupe todo el ancho del contenedor */
+  font-size: 1rem; /* Aumenta el tamaño de la fuente */
+}
+.custom-table th,
+.custom-table td {
+  padding: 20px; /* Agrega más espacio en las celdas */
+}
