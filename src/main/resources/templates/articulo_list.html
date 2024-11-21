@@ -206,6 +206,7 @@
                         <th scope="col" class="px-4 py-3">ID Articulo</th>
                         <th scope="col" class="px-4 py-3">N° Articulo</th>
                         <th scope="col" class="px-4 py-3">Nombre</th>
+                        <th scope="col" class="px-4 py-3">Imagen</th>
                         <th scope="col" class="px-4 py-3">Descripción</th>
                         <th scope="col" class="px-4 py-3">Fábrica</th>
                         <th scope="col" class="px-4 py-3" sec:authorize="hasRole('ROLE_ADMIN')">Acciones</th>
@@ -221,8 +222,8 @@
                         </th>
                         <td class="px-4 py-3" th:text="${articulo.nroArticulo}"></td>
                         <td class="px-4 py-3" th:text="${articulo.nombreArticulo}"></td>
+                        <td class="px-4 py-3"><img th:src="@{/imagen/articulo/{id}(id=${articulo.idArticulo})}" class="img-fluid h-20" alt="img"></td>
                         <td class="px-4 py-3" th:text="${articulo.descripcionArticulo}"></td>
-                        <td class="px-4 py-3" th:text="${articulo.fabrica.nombre}"></td>
                         <td class="px-4 py-3" sec:authorize="hasRole('ROLE_ADMIN')">
 
                             <a
@@ -279,7 +280,7 @@
         </svg>
         <span class="sr-only">Cerrar menu</span>
     </button>
-    <form th:action="@{/articulo/registro}" method="POST">
+    <form th:action="@{/articulo/registro}" method="POST" enctype="multipart/form-data">
         <div class="space-y-4">
             <div>
                 <label
@@ -312,6 +313,9 @@
                     th:value="${fabrica.idFabrica}"
                     th:text="${fabrica.nombre}"></option>
                 </select>
+            </div>
+            <div class="form-group my-3">
+                <input type="file" class="form-control" name="archivo" >
             </div>
             <div>
                 <label

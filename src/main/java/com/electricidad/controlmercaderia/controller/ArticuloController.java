@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -25,16 +26,16 @@ public class ArticuloController {
     private FabricaService fabricaService;
 
     @PostMapping("/registro")
-    public String registrarArticulo(String nombre, String descripcion, UUID idFabrica, RedirectAttributes redirect) throws Exception {
+    public String registrarArticulo(String nombre, String descripcion, UUID idFabrica, RedirectAttributes redirect, MultipartFile archivo) throws Exception {
 
         validar(nombre, descripcion, idFabrica);
 
         var fabrica = fabricaService.obtenerFabrica(idFabrica);
 
-        System.out.println(nombre.toUpperCase()+" | " +descripcion.toUpperCase()+" | "+fabrica.getIdFabrica());
+        System.out.println(nombre.toUpperCase()+" | " +descripcion.toUpperCase()+" | "+fabrica.getIdFabrica()+" | "+archivo.getOriginalFilename());
 
 
-        articuloService.crearArticulo(nombre, descripcion, fabrica);
+        articuloService.crearArticulo(nombre, descripcion, fabrica, archivo);
 
         redirect.addFlashAttribute("successMessage", "Articulo creado con exito");
 

@@ -29,6 +29,10 @@ public class Articulo {
     @NotBlank
     private String descripcionArticulo;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_imagen")
+    private Imagen imagen;
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fabrica_id")

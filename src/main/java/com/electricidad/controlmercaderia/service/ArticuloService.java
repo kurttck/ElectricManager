@@ -2,11 +2,13 @@ package com.electricidad.controlmercaderia.service;
 
 import com.electricidad.controlmercaderia.model.Articulo;
 import com.electricidad.controlmercaderia.model.Fabrica;
+import com.electricidad.controlmercaderia.model.Imagen;
 import com.electricidad.controlmercaderia.repository.ArticuloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,12 +23,15 @@ public class ArticuloService {
     @Autowired
     private FabricaService fabricaService;
 
+    @Autowired
+    private ImagenService imagenServicio;
+
     public List<Articulo> listarArticulos() {
         return articuloRepository.findAllByOrderByNroArticuloAsc();
     }
 
     @Transactional
-    public void crearArticulo(String nombre, String descripcion, Fabrica fabrica) {
+    public void crearArticulo(String nombre, String descripcion, Fabrica fabrica, MultipartFile archivo) {
 
         var articulo = new Articulo();
 
@@ -34,6 +39,10 @@ public class ArticuloService {
         articulo.setNombreArticulo(nombre);
         articulo.setDescripcionArticulo(descripcion);
         articulo.setFabrica(fabrica);
+
+        Imagen imagen = imagenServicio.guardarImagen(archivo);
+
+        articulo.setImagen(imagen);
 
         articuloRepository.save(articulo);
     }
