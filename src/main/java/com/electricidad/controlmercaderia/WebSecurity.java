@@ -17,7 +17,7 @@ public class WebSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/dashboard/**", "/articulo/**", "/imagen/**").authenticated()
+                        .requestMatchers("/dashboard/**", "/articulo/**", "/imagen/**", "/usuario/**").authenticated()
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/registrar")
                         .permitAll())
                 .formLogin((form) -> form

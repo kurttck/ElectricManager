@@ -26,6 +26,8 @@ public class Fabrica {
     @NotBlank
     private String nombre;
 
+    private Boolean activo;
+
     @OneToMany (mappedBy = "fabrica")
     private List<Articulo> articulos;
 }

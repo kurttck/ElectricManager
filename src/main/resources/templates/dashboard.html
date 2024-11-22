@@ -28,7 +28,8 @@
 <main>
     <section class="w-screen flex flex-col justify-center">
         <div class="h-1/6 p-3 flex justify-center items-center mt-14">
-            <h1 class="text-white text-4xl"  >Hola</h1>
+            <h1 class="text-white text-4xl"  th:text="'Bienvenido ' +${session.usuariosession.nombre} + ' a Electric Manager'"></h1>
+
         </div>
         <div class="text-white flex flex-1 gap-16 justify-center mt-14">
             <div

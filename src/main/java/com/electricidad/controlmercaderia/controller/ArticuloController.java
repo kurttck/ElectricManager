@@ -4,9 +4,10 @@ import com.electricidad.controlmercaderia.model.Articulo;
 import com.electricidad.controlmercaderia.model.Fabrica;
 import com.electricidad.controlmercaderia.service.ArticuloService;
 import com.electricidad.controlmercaderia.service.FabricaService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,6 +75,7 @@ public class ArticuloController {
     }
 
     @GetMapping("/modificar/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String modificar(@PathVariable UUID id, ModelMap model){
         Articulo articulo = articuloService.obtenerArticulo(id);
         List<Fabrica> fabricaList = fabricaService.listarFabricas();
@@ -83,9 +85,6 @@ public class ArticuloController {
         fabricaList.remove(articuloFabrica);
         fabricaList.add(0, articuloFabrica);
 
-        System.out.println("HOLA INTENTANDO ENTRAR EN MODIFICAR");
-        System.out.println("Fabricas"+fabricaList);
-        System.out.println("Articulo"+articulo);
         model.addAttribute("fabricas", fabricaList);
         model.addAttribute("articulo", articulo);
 
@@ -93,13 +92,21 @@ public class ArticuloController {
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificar(@PathVariable UUID id, String nombre, String descripcion, UUID idFabrica) throws Exception {
+    public String modificar(@PathVariable UUID id, String nombre, String descripcion, UUID idFabrica, MultipartFile archivo) throws Exception {
         validar(nombre, descripcion, idFabrica);
 
-        articuloService.actualizarArticulo(id, nombre, descripcion, idFabrica);
+        articuloService.actualizarArticulo(id, nombre, descripcion, idFabrica, archivo);
 
         return "redirect:/articulo/lista";
     }
+
+    @GetMapping("/eliminar/{id}")
+    @Transactional
+    public String eliminar(@PathVariable UUID id){
+        articuloService.desactivarArticulo(id);
+        return "redirect:/articulo/lista";
+    }
+
 
 
 }

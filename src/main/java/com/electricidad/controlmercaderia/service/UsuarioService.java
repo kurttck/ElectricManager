@@ -19,6 +19,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -86,5 +87,13 @@ public class UsuarioService implements UserDetailsService {
         }else{
             return null;
         }
+    }
+
+    public List<Usuario> listarUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    public Usuario obtenerUsuario(UUID id) {
+        return usuarioRepository.findById(id).orElse(null);
     }
 }

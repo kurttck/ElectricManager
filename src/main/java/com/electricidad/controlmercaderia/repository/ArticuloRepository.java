@@ -11,8 +11,7 @@ import java.util.UUID;
 @Repository
 public interface ArticuloRepository extends JpaRepository<Articulo, UUID> {
 
+    //List<Articulo> findAllByActivoTrueOrderByNroArticuloAsc();
 
-    List<Articulo> findAllByOrderByNroArticuloAsc();  // Orden ascendente
-
-
+    List<Articulo> findAllByActivoTrueOrderByNombreArticuloAsc();
 }

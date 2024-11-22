@@ -27,7 +27,7 @@ public class ArticuloService {
     private ImagenService imagenServicio;
 
     public List<Articulo> listarArticulos() {
-        return articuloRepository.findAllByOrderByNroArticuloAsc();
+        return articuloRepository.findAllByActivoTrueOrderByNombreArticuloAsc();
     }
 
     @Transactional
@@ -52,7 +52,7 @@ public class ArticuloService {
     }
 
     @Transactional
-    public void actualizarArticulo(UUID id, String nombre, String descripcion, UUID idFabrica) {
+    public void actualizarArticulo(UUID id, String nombre, String descripcion, UUID idFabrica, MultipartFile archivo) throws Exception {
 
         var fabrica = fabricaService.obtenerFabrica(idFabrica);
 
@@ -60,6 +60,26 @@ public class ArticuloService {
 
         articulo.setNombreArticulo(nombre);
         articulo.setDescripcionArticulo(descripcion);
+
+        UUID idImagen = null;
+        if(articulo.getImagen() != null) {
+            idImagen = articulo.getImagen().getId();
+            System.out.println("ID DE IMAGEN "+idImagen);
+            Imagen imagen =imagenServicio.actualizarImagen(idImagen, archivo);
+            articulo.setImagen(imagen);
+        }else{
+
+            Imagen imagenSave = imagenServicio.guardarImagen(archivo);
+            articulo.setImagen(imagenSave);
+        }
+
         articulo.setFabrica(fabrica);
+
+        articuloRepository.save(articulo);
+    }
+
+    public void desactivarArticulo(UUID id) {
+        var articulo = articuloRepository.getReferenceById(id);
+        articulo.setActivo(false);
     }
 }

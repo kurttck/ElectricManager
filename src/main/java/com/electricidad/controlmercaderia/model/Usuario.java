@@ -34,6 +34,12 @@ public class Usuario {
     @NotBlank
     private String password;
 
+    private Boolean activo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_imagen")
+    private Imagen imagen;
+
     @Enumerated(EnumType.STRING)
     private Rol rol;
 }

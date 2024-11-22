@@ -38,5 +38,7 @@ public class Articulo {
     @JoinColumn(name = "fabrica_id")
     private Fabrica fabrica;
 
+    private Boolean activo;
+
 
 }
